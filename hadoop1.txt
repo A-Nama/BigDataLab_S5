@@ -1,0 +1,87 @@
+$ start-dfs.sh
+$ start-yarn.sh  
+$ nano mapper.py
+$ nano reducer.py
+$ chmod +x mapper.py reducer.py
+$ echo "A quantum computer is a (real or theoretical) computer that uses quantum mechanical phenomena in an essential way: a quantum computer exploits superposed and entangled states and the (non-deterministic) outcomes of quantum measurements as features of its computation. Ordinary ("classical") computers operate, by contrast, using deterministic rules. Any classical computer can, in principle, be replicated using a (classical) mechanical device such as a Turing machine, with at most a constant-factor slowdown in time—unlike quantum computers, which are believed to require exponentially more resources to simulate classically." > input.txt
+
+$ hdfs dfs -mkdir -p /user/hadoop/input
+$ hdfs dfs -put input.txt /user/hadoop/input/
+
+
+$ hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \
+ -input /user/hadoop/input \
+ -output /user/hadoop/output-wordcount \
+ -mapper mapper.py \
+ -reducer reducer.py \
+ -file mapper.py \
+ -file reducer.py
+
+
+$ hdfs dfs -cat /user/hadoop/output-wordcount/part-00000
+(classical)	2
+(non-deterministic)	1
+(real	1
+A	1
+Any	1
+Ordinary	1
+Turing	1
+a	5
+an	1
+and	2
+are	1
+as	2
+at	1
+be	1
+believed	1
+by	1
+can,	1
+classical	1
+classically.	1
+computation.	1
+computer	4
+computers	1
+computers,	1
+constant-factor	1
+contrast,	1
+deterministic	1
+device	1
+entangled	1
+essential	1
+exploits	1
+exponentially	1
+features	1
+in	3
+is	1
+its	1
+machine,	1
+measurements	1
+mechanical	2
+more	1
+most	1
+of	2
+operate,	1
+or	1
+outcomes	1
+phenomena	1
+principle,	1
+quantum	5
+replicated	1
+require	1
+resources	1
+rules.	1
+simulate	1
+slowdown	1
+states	1
+such	1
+superposed	1
+that	1
+the	1
+theoretical)	1
+time—unlike	1
+to	2
+uses	1
+using	2
+way:	1
+which	1
+with	1
