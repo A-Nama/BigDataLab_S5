@@ -1,0 +1,29 @@
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/wordcount$ mkdir ~/maxtemp 
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/wordcount$ cd ~/maxtemp
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/maxtemp$ nano MaxTemperature.java
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/maxtemp$ export HADOOP_CLASSPATH=$(hadoop classpath)
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/maxtemp$ javac -classpath $HADOOP_CLASSPATH -d . MaxTemperature.java
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/maxtemp$ jar -cvf maxtemp.jar *.class
+added manifest
+adding: MaxTemperature$MaxReducer.class(in = 1839) (out= 793)(deflated 56%)
+adding: MaxTemperature$TempMapper.class(in = 1932) (out= 830)(deflated 57%)
+adding: MaxTemperature.class(in = 1660) (out= 908)(deflated 45%)
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/maxtemp$ cat <<EOF >temperature.txt
+> 1990 35
+> 1990 32
+> 1991 36
+> 1991 38
+> 1992 30
+> EOF
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hdfs dfs -mkdir -p /user/hduser/input
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hdfs dfs -put -f temperature.txt /user/hduser/input/
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hadoop jar maxtemp.jar MaxTemperature /user/hduser/input /user/hduser/output
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hdfs dfs -rm -r /user/hduser/output
+Deleted /user/hduser/output
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hadoop jar maxtemp.jar MaxTemperature /user/hduser/input /user/hduser/output
+
+//output
+hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hdfs dfs -cat /user/hduser/output/part-r-00000
+1990	35
+1991	38
+1992	30
