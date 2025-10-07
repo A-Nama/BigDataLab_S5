@@ -1,0 +1,14 @@
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~$ mkdir ~/hadoop-matrix
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~$ cd hadoop-matrix
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/hadoop-matrix$ nano MatrixMultiply.java
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/hadoop-matrix$ javac -classpath $(hadoop classpath) -d . MatrixMultiply.java
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/hadoop-matrix$ jar -cvf MatrixMultiply.jar *
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/hadoop-matrix$ hdfs dfs -mkdir /input
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/hadoop-matrix$ echo "dummy" > input.txt
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/hadoop-matrix$ hdfs dfs -put input.txt /input/
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/hadoop-matrix$ hadoop jar MatrixMultiply.jar MatrixMultiply /input /output
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/hadoop-matrix$ hdfs dfs -cat /output/part-r-00000
+0,0	58
+0,1	64
+1,0	139
+1,1	154
