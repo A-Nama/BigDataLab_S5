@@ -1,24 +1,18 @@
 hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/wordcount$ mkdir ~/maxtemp 
 hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/wordcount$ cd ~/maxtemp
-hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ nano MaxTemperature.java
-hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ export HADOOP_CLASSPATH=$(hadoop classpath)
-hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ javac -classpath $HADOOP_CLASSPATH -d . MaxTemperature.java
-hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ jar -cvf maxtemp.jar *.class
-hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ cat <<EOF >temperature.txt
-> 1990 35
-> 1990 32
-> 1991 36
-> 1991 38
-> 1992 30
-> EOF
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ nano weather.csv
 hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hdfs dfs -mkdir -p /user/hduser/input
-hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hdfs dfs -put -f temperature.txt /user/hduser/input/
-hadoop@anjana-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hdfs dfs -rm -r /user/hduser/output
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hdfs dfs -put -f weather.csv /user/hduser/input/
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ nano MaxTempByYear.java
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ export HADOOP_CLASSPATH=$(hadoop classpath)
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ javac -classpath $HADOOP_CLASSPATH -d . MaxTempByYear.java
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ jar -cvf maxtempbyyear.jar *.class
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hdfs dfs -rm -r -skipTrash /user/hduser/output
 Deleted /user/hduser/output
-hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hadoop jar maxtemp.jar MaxTemperature /user/hduser/input /user/hduser/output
-
-//output
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hadoop jar maxtempbyyear.jar MaxTempByYear /user/hduser/input /user/hduser/output
 hadoop@aisha-Standard-PC-Q35-ICH9-2009:~/maxtemp$ hdfs dfs -cat /user/hduser/output/part-r-00000
-1990	35
-1991	38
-1992	30
+2013	38.714285714285715
+2014	38.5
+2015	37.75
+2016	38.27272727272727
+2017	10.0
