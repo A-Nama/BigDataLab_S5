@@ -1,0 +1,20 @@
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~$ echo -e "3\n1\n5\n2\n6\n4\n8" > input.txt
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~$ hdfs dfs -mkdir -p /user/hadoop/input
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~$ hdfs dfs -put -f input.txt /user/hadoop/input/
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~$ hdfs dfs -ls /user/hadoop/input/
+Found 1 items
+-rw-r--r--   1 hadoop supergroup         14 2025-10-22 15:18 /user/hadoop/input/input.txt
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~$ nano sort_array.pig
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~$ pig sort_array.pig
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~$ hdfs dfs -ls /user/hadoop/output/sorted
+Found 2 items
+-rw-r--r--   1 hadoop supergroup          0 2025-10-22 15:21 /user/hadoop/output/sorted/_SUCCESS
+-rw-r--r--   1 hadoop supergroup         14 2025-10-22 15:21 /user/hadoop/output/sorted/part-r-00000
+hadoop@aisha-Standard-PC-Q35-ICH9-2009:~$ hdfs dfs -cat /user/hadoop/output/sorted/part-r-00000
+1
+2
+3
+4
+5
+6
+8
